@@ -28,6 +28,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "TEDxBITSHyderabad - Which Speaker Are You?",
   description: "Find out which TEDxBITSHyderabad speaker matches your personality in this quick quiz.",
+  icons: {
+    icon: "/X.png",
+  },
 };
 
 export default function RootLayout({
@@ -48,7 +51,7 @@ export default function RootLayout({
           <div className="floating-cross cross-4">+</div>
         </div>
         <div style={{ position: 'absolute', top: '1.5rem', right: '2rem', zIndex: 100 }}>
-          <img src="/logo-white.png" alt="TEDxBITSHyderabad Logo" style={{ height: '40px', width: 'auto' }} />
+          <img src="/logo-white.png" alt="TEDxBITSHyderabad Logo" style={{ height: '0px', width: 'auto' }} />
         </div>
         {children}
       </body>

@@ -28,9 +28,6 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "TEDxBITSHyderabad - Which Speaker Are You?",
   description: "Find out which TEDxBITSHyderabad speaker matches your personality in this quick quiz.",
-  icons: {
-    icon: "/X.png",
-  },
 };
 
 export default function RootLayout({

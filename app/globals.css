@@ -1,11 +1,11 @@
 :root {
-  --bg-main: #050505;
-  --bg-card: #0a0a0a;
+  --bg-main: #0A0A0A;
+  --bg-card: #111111;
+  --bg-card-elevated: #1A1A1A;
   --tedx-red: #EB0028;
-  --border-color: #333333;
-  --border-highlight: #EB0028;
+  --border-color: #2A2A2A;
   --text-primary: #FFFFFF;
-  --text-muted: #666666;
+  --text-muted: #888888;
 }
 
 * {
@@ -15,22 +15,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Custom Scrollbar - Retro */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-main);
-  border-left: 1px solid var(--border-color);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
-  border-radius: 0; /* Square edges for retro */
+  border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--tedx-red);
 }
 
+/* Selection */
 ::selection {
   background: var(--tedx-red);
   color: white;
@@ -39,81 +39,82 @@
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: var(--font-vt323), monospace; /* Default to terminal font */
-  overflow: hidden; 
+  font-family: var(--font-inter), sans-serif;
+  overflow: hidden; /* Prevent scrolling for booth kiosk */
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Disable anti-aliasing to make things look crunchier where possible */
-  -webkit-font-smoothing: none;
 }
 
 /* Typography Classes */
-.font-pixel {
-  font-family: var(--font-silkscreen), cursive;
+.font-display {
+  font-family: var(--font-bebas-neue), sans-serif;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.font-term {
-  font-family: var(--font-vt323), monospace;
+.font-serif {
+  font-family: var(--font-playfair-display), serif;
+  font-style: italic;
 }
 
-/* --- Visual Effects --- */
+.font-mono {
+  font-family: var(--font-jetbrains-mono), monospace;
+}
 
-/* 1. Retro Grid Background */
-.retro-grid {
+/* Floating Crosses Effect */
+.crosses-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    linear-gradient(rgba(235, 0, 40, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(235, 0, 40, 0.05) 1px, transparent 1px);
-  background-size: 30px 30px;
+  overflow: hidden;
   z-index: 0;
   pointer-events: none;
 }
 
-/* 2. CRT Scanlines */
-.scanlines {
+.floating-cross {
+  position: absolute;
+  color: rgba(235, 0, 40, 0.15); /* Very faint red */
+  font-family: sans-serif;
+  font-weight: 300;
+  animation: floatRandom linear infinite;
+  user-select: none;
+}
+
+.cross-1 { font-size: 8rem; left: 15%; top: 20%; animation-duration: 30s; animation-direction: alternate; }
+.cross-2 { font-size: 15rem; right: 10%; top: 40%; animation-duration: 45s; animation-direction: alternate-reverse; opacity: 0.5; }
+.cross-3 { font-size: 5rem; left: 60%; bottom: 10%; animation-duration: 25s; }
+.cross-4 { font-size: 10rem; left: -2%; bottom: 30%; animation-duration: 35s; animation-direction: alternate; }
+
+@keyframes floatRandom {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(20px, -30px) rotate(15deg); }
+  66% { transform: translate(-20px, 30px) rotate(-10deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+
+/* Spotlight Sweep Animation for Result Reveal */
+.spotlight-sweep {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0) 50%,
-    rgba(0,0,0,0.2) 50%,
-    rgba(0,0,0,0.2)
-  );
-  background-size: 100% 4px;
-  z-index: 50; /* Sits on top of everything to give screen effect */
+  left: -100%;
+  width: 50vw;
+  height: 100vh;
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0) 0%, rgba(235, 0, 40, 0.15) 50%, rgba(10, 10, 10, 0) 100%);
   pointer-events: none;
-  opacity: 0.4;
-}
-
-/* 3. Glitch/CRT Reveal Animation */
-.glitch-reveal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--tedx-red);
   z-index: 10;
-  animation: glitch-out 0.6s steps(4) forwards;
+  animation: sweep 1.2s ease-out forwards;
 }
 
-@keyframes glitch-out {
-  0% { transform: scaleY(1); opacity: 1; }
-  25% { transform: scaleY(0.1) scaleX(2); opacity: 0.8; }
-  50% { transform: scaleY(0.02) scaleX(3); opacity: 0.5; background-color: #fff; }
-  100% { transform: scaleY(0) scaleX(0); opacity: 0; }
+@keyframes sweep {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 150%; opacity: 0; }
 }
 
 /* General Layouts */
@@ -121,7 +122,7 @@ body {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 800px;
   height: 100%;
   max-height: 900px;
   display: flex;
@@ -130,46 +131,129 @@ body {
   margin: 0 auto;
 }
 
-/* Snappy Animations (No smooth easing) */
-.snap-in {
-  animation: snapIn 0.3s steps(3, end) forwards;
-}
-
-@keyframes snapIn {
-  0% { opacity: 0; transform: translateY(10px); }
-  50% { opacity: 0.5; transform: translateY(5px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Retro Buttons */
-.btn-retro {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 2px solid var(--border-color);
-  padding: 1.5rem 3rem;
+/* Buttons */
+.btn-primary {
+  background-color: var(--tedx-red);
+  color: #fff;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.5rem;
   cursor: pointer;
+  border-radius: 6px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* Sharp corners */
-  border-radius: 0;
-  /* No smooth transitions, instant snapping */
-  transition: none; 
 }
 
-.btn-retro:hover {
-  background-color: var(--tedx-red);
-  color: #fff;
-  border-color: var(--tedx-red);
+.btn-primary:active {
+  transform: scale(0.95);
+}
+.btn-primary:hover {
+  background-color: #d10024;
+  transform: scale(1.05);
 }
 
-.btn-retro:active {
-  background-color: #fff;
-  color: var(--tedx-red);
-  border-color: #fff;
-}
-
-.btn-retro:focus-visible {
-  outline: 2px dashed var(--tedx-red);
+.btn-primary:focus-visible {
+  outline: 2px solid var(--text-primary);
   outline-offset: 4px;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Brutalist / Editorial Layout Classes */
+.brutalist-border {
+  border-top: 1px solid var(--border-color);
+  padding-top: 2rem;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.brutalist-border::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 50px;
+  height: 5px;
+  background-color: var(--text-primary);
+}
+
+.section-number {
+  position: absolute;
+  right: 2rem;
+  top: 5.5rem;
+  font-size: 5rem;
+  color: var(--text-primary);
+  opacity: 0.9;
+  font-family: var(--font-bebas-neue);
+  letter-spacing: -0.05em;
+}
+
+.massive-text {
+  font-family: var(--font-bebas-neue), sans-serif;
+  font-size: clamp(4rem, 9.5vw, 9.5rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+}
+
+.quote-icon {
+  display: inline-block;
+  color: var(--tedx-red);
+  font-family: var(--font-bebas-neue);
+  font-size: 8rem;
+  line-height: 0.5;
+  margin-right: 1rem;
+  vertical-align: top;
+}
+
+.brutalist-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem 3rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  font-family: var(--font-inter);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.brutalist-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-main);
+}
+
+.brutalist-btn .arrow {
+  background: var(--text-primary);
+  color: var(--bg-main);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.brutalist-btn:hover .arrow {
+  background: var(--bg-main);
+  color: var(--text-primary);
 }

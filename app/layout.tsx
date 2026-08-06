@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
-import { Silkscreen, VT323 } from "next/font/google";
+import { Inter, Bebas_Neue, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import ParticleBackground from "@/components/ParticleBackground";
 
-const silkscreen = Silkscreen({
-  variable: "--font-silkscreen",
-  weight: ["400", "700"],
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const vt323 = VT323({
-  variable: "--font-vt323",
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas-neue",
   weight: "400",
+  subsets: ["latin"],
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -27,10 +38,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${silkscreen.variable} ${vt323.variable} antialiased`}
+        className={`${inter.variable} ${bebasNeue.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <div className="retro-grid"></div>
-        <div className="scanlines"></div>
+        <ParticleBackground />
+        <div className="crosses-container">
+          <div className="floating-cross cross-1">+</div>
+          <div className="floating-cross cross-2">+</div>
+          <div className="floating-cross cross-3">+</div>
+          <div className="floating-cross cross-4">+</div>
+        </div>
+        <div style={{ position: 'absolute', top: '1.5rem', right: '2rem', zIndex: 100 }}>
+          <img src="/logo-white.png" alt="TEDxBITSHyderabad Logo" style={{ height: '40px', width: 'auto' }} />
+        </div>
         {children}
       </body>
     </html>

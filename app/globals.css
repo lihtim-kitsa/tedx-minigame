@@ -1,49 +1,175 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-main: #050505;
+  --bg-card: #0a0a0a;
+  --tedx-red: #EB0028;
+  --border-color: #333333;
+  --border-highlight: #EB0028;
+  --text-primary: #FFFFFF;
+  --text-muted: #666666;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Custom Scrollbar - Retro */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-left: 1px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 0; /* Square edges for retro */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tedx-red);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+::selection {
+  background: var(--tedx-red);
+  color: white;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-vt323), monospace; /* Default to terminal font */
+  overflow: hidden; 
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Disable anti-aliasing to make things look crunchier where possible */
+  -webkit-font-smoothing: none;
+}
+
+/* Typography Classes */
+.font-pixel {
+  font-family: var(--font-silkscreen), cursive;
+  text-transform: uppercase;
+}
+
+.font-term {
+  font-family: var(--font-vt323), monospace;
+}
+
+/* --- Visual Effects --- */
+
+/* 1. Retro Grid Background */
+.retro-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(235, 0, 40, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(235, 0, 40, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 2. CRT Scanlines */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
+  );
+  background-size: 100% 4px;
+  z-index: 50; /* Sits on top of everything to give screen effect */
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* 3. Glitch/CRT Reveal Animation */
+.glitch-reveal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--tedx-red);
+  z-index: 10;
+  animation: glitch-out 0.6s steps(4) forwards;
+}
+
+@keyframes glitch-out {
+  0% { transform: scaleY(1); opacity: 1; }
+  25% { transform: scaleY(0.1) scaleX(2); opacity: 0.8; }
+  50% { transform: scaleY(0.02) scaleX(3); opacity: 0.5; background-color: #fff; }
+  100% { transform: scaleY(0) scaleX(0); opacity: 0; }
+}
+
+/* General Layouts */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+/* Snappy Animations (No smooth easing) */
+.snap-in {
+  animation: snapIn 0.3s steps(3, end) forwards;
+}
+
+@keyframes snapIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  50% { opacity: 0.5; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Retro Buttons */
+.btn-retro {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem 3rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Sharp corners */
+  border-radius: 0;
+  /* No smooth transitions, instant snapping */
+  transition: none; 
+}
+
+.btn-retro:hover {
+  background-color: var(--tedx-red);
+  color: #fff;
+  border-color: var(--tedx-red);
+}
+
+.btn-retro:active {
+  background-color: #fff;
+  color: var(--tedx-red);
+  border-color: #fff;
+}
+
+.btn-retro:focus-visible {
+  outline: 2px dashed var(--tedx-red);
+  outline-offset: 4px;
 }

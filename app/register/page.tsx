@@ -75,7 +75,7 @@ export default function RegisterPage() {
   };
 
   const renderLanding = () => (
-    <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+    <div className="screen-container fade-in">
       <div className="section-number">/04</div>
       <div style={{ position: 'relative', width: '100%', marginTop: '3rem' }}>
         <h1 className="massive-text">
@@ -84,7 +84,7 @@ export default function RegisterPage() {
           <span style={{ color: 'var(--tedx-red)' }}>SPOT</span>
         </h1>
 
-        <div className="brutalist-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '2rem' }}>
+        <div className="brutalist-border landing-layout">
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <span className="quote-icon">"</span>
             <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6', marginTop: '1rem' }}>
@@ -106,7 +106,7 @@ export default function RegisterPage() {
     const options = ['Yes', 'Maybe', 'No'];
 
     return (
-      <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', padding: '4rem' }}>
+      <div className="screen-container fade-in">
         <div className="section-number">/Q</div>
         
         <div style={{ display: 'flex', gap: '8px', marginBottom: '3rem', width: '100%' }}>
@@ -130,14 +130,7 @@ export default function RegisterPage() {
           {question}
         </h2>
         
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(3, 1fr)', 
-          gap: '1px',
-          backgroundColor: 'var(--border-color)',
-          border: '1px solid var(--border-color)',
-          width: '100%'
-        }}>
+        <div className="register-quiz-grid">
           {options.map((option, idx) => (
             <button 
               key={idx}
@@ -175,7 +168,7 @@ export default function RegisterPage() {
   };
 
   const renderEmail = () => (
-    <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+    <div className="screen-container fade-in">
       <div className="section-number">/EM</div>
       <div style={{ position: 'relative', width: '100%', marginTop: '3rem' }}>
         <h1 className="massive-text" style={{ fontSize: 'clamp(3rem, 7vw, 7rem)' }}>
@@ -183,7 +176,7 @@ export default function RegisterPage() {
           <span style={{ color: 'var(--tedx-red)' }}>THERE</span>
         </h1>
 
-        <div className="brutalist-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '2rem', gap: '4rem' }}>
+        <div className="brutalist-border email-layout">
           <div style={{ flex: '1 1 300px', display: 'flex', alignItems: 'flex-start' }}>
             <span className="quote-icon">"</span>
             <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6', marginTop: '1rem' }}>
@@ -242,7 +235,7 @@ export default function RegisterPage() {
   );
 
   const renderSuccess = () => (
-    <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+    <div className="screen-container fade-in">
       <div className="section-number">/02</div>
       <div className="spotlight-sweep"></div>
       

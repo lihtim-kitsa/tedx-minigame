@@ -10,7 +10,7 @@ export default function Home() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [topSpeaker, setTopSpeaker] = useState<typeof speakers[0] | null>(null);
-  
+
   // Idle Timer Logic
   const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -89,12 +89,12 @@ export default function Home() {
       <div className="section-number">/01</div>
       <div style={{ position: 'relative', width: '100%', marginTop: '3rem' }}>
         <h1 className="massive-text">
-          WHICH<br/>
-          TEDx<br/>
-          <span style={{ color: 'var(--tedx-red)' }}>SPEAKER</span><br/>
+          WHICH<br />
+          TEDx<br />
+          <span style={{ color: 'var(--tedx-red)' }}>SPEAKER</span><br />
           ARE YOU?
         </h1>
-        
+
         <div className="brutalist-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '2rem' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <span className="quote-icon">"</span>
@@ -102,7 +102,7 @@ export default function Home() {
               Discover your <span className="font-serif" style={{ color: 'var(--text-primary)' }}>ideation archetype</span>. At TEDxBITSHyderabad, every idea is a unique building block.
             </p>
           </div>
-          
+
           <button className="brutalist-btn" onClick={handleStart}>
             Start Quiz
             <span className="arrow">&rarr;</span>
@@ -117,31 +117,31 @@ export default function Home() {
     return (
       <div className="screen-container fade-in">
         <div className="section-number">/Q</div>
-        
+
         <div style={{ display: 'flex', gap: '8px', marginBottom: '3rem', width: '100%' }}>
           {questions.map((_, idx) => (
-            <div 
-              key={idx} 
-              style={{ 
-                height: '4px', 
-                flex: 1, 
+            <div
+              key={idx}
+              style={{
+                height: '4px',
+                flex: 1,
                 backgroundColor: idx <= currentQuestionIndex ? 'var(--tedx-red)' : 'var(--border-color)',
-              }} 
+              }}
             />
           ))}
         </div>
-        
+
         <div style={{ color: 'var(--tedx-red)', marginBottom: '1rem', fontSize: '1rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
           ( {currentQuestionIndex + 1} / {questions.length} )
         </div>
-        
+
         <h2 className="font-display" style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: '1.1', maxWidth: '900px' }}>
           {question.text}
         </h2>
-        
+
         <div className="quiz-grid">
           {question.options.map((option, idx) => (
-            <button 
+            <button
               key={idx}
               onClick={() => handleAnswer(option.archetype_ids)}
               style={{
@@ -184,7 +184,7 @@ export default function Home() {
       <div className="screen-container fade-in">
         <div className="section-number">/02</div>
         <div className="spotlight-sweep"></div>
-        
+
         <h1 className="massive-text" style={{ fontSize: 'clamp(4rem, 8vw, 8rem)', marginBottom: '2rem', color: 'var(--tedx-red)' }}>
           {topSpeaker.name}
         </h1>
@@ -192,7 +192,7 @@ export default function Home() {
         <div className="brutalist-border result-grid">
           {/* Strict Rectangular Photo */}
           <div style={{ position: 'relative' }}>
-            <div style={{ 
+            <div style={{
               width: '100%',
               aspectRatio: '3/4',
               backgroundColor: 'var(--bg-card)',
@@ -200,9 +200,9 @@ export default function Home() {
               position: 'relative',
               overflow: 'hidden'
             }}>
-              <img 
-                src={topSpeaker.photo_url} 
-                alt={topSpeaker.name} 
+              <img
+                src={topSpeaker.photo_url}
+                alt={topSpeaker.name}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(0.3)' }}
               />
             </div>
@@ -230,8 +230,8 @@ export default function Home() {
                 <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
                   {topSpeaker.result_blurb}
                 </p>
-                <button 
-                  className="brutalist-btn" 
+                <button
+                  className="brutalist-btn"
                   onClick={() => setScreen("CTA")}
                   style={{ padding: '1rem 2rem', fontSize: '1.2rem' }}
                 >
@@ -249,26 +249,26 @@ export default function Home() {
   const renderCTA = () => (
     <div className="screen-container fade-in">
       <div className="section-number">/03</div>
-      
+
       <h1 className="massive-text" style={{ marginBottom: '2rem' }}>
-        IDEAS<br/>
-        WORTH<br/>
+        IDEAS<br />
+        WORTH<br />
         <span style={{ color: 'var(--tedx-red)' }}>SPREADING</span>
       </h1>
-      
+
       <div className="brutalist-border cta-layout">
         <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6' }}>
           Join us at the upcoming event to see these ideas live. We are also recruiting passionate individuals to help build the next edition.
         </p>
-        
+
         <div className="cta-buttons">
-          <button 
-            onClick={resetGame} 
-            style={{ 
-              background: 'none', 
-              border: 'none', 
-              color: 'var(--text-muted)', 
-              textDecoration: 'underline', 
+          <button
+            onClick={resetGame}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--text-muted)',
+              textDecoration: 'underline',
               cursor: 'pointer',
               fontSize: '1rem',
               textTransform: 'uppercase',
@@ -277,12 +277,12 @@ export default function Home() {
           >
             Restart
           </button>
-          
+
           <a href="https://instagram.com/tedxbitshyderabad" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ padding: '1rem 2rem', fontSize: '1.2rem', textDecoration: 'none' }}>
             Our Instagram
             <span className="arrow">&rarr;</span>
           </a>
-          
+
           <a href="https://tedxbitshyderabad.org" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ padding: '1rem 2rem', fontSize: '1.2rem', textDecoration: 'none' }}>
             Visit our Site
             <span className="arrow">&rarr;</span>

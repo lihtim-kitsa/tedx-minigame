@@ -135,29 +135,8 @@ export default function RegisterPage() {
             <button 
               key={idx}
               onClick={() => handleAnswer(option)}
-              style={{
-                backgroundColor: 'var(--bg-main)',
-                border: 'none',
-                padding: '3rem 2rem',
-                color: 'var(--text-primary)',
-                fontSize: '1.25rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                minHeight: '140px',
-                fontFamily: 'var(--font-inter)'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--text-primary)';
-                e.currentTarget.style.color = 'var(--bg-main)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--bg-main)';
-                e.currentTarget.style.color = 'var(--text-primary)';
-              }}
+              className="quiz-option-btn"
+              style={{ textAlign: 'center' }}
             >
               {option}
             </button>

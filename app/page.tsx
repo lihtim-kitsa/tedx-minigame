@@ -95,7 +95,7 @@ export default function Home() {
           ARE YOU?
         </h1>
 
-        <div className="brutalist-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '2rem' }}>
+        <div className="brutalist-border landing-layout">
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <span className="quote-icon">"</span>
             <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6', marginTop: '1rem' }}>
@@ -144,29 +144,8 @@ export default function Home() {
             <button
               key={idx}
               onClick={() => handleAnswer(option.archetype_ids)}
-              style={{
-                backgroundColor: 'var(--bg-main)',
-                border: 'none',
-                padding: '3rem 2rem',
-                color: 'var(--text-primary)',
-                fontSize: '1.25rem',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'left',
-                minHeight: '140px',
-                fontFamily: 'var(--font-inter)'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--text-primary)';
-                e.currentTarget.style.color = 'var(--bg-main)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--bg-main)';
-                e.currentTarget.style.color = 'var(--text-primary)';
-              }}
+              className="quiz-option-btn"
+              style={{ textAlign: 'left' }}
             >
               {option.text}
             </button>
@@ -233,7 +212,6 @@ export default function Home() {
                 <button
                   className="brutalist-btn"
                   onClick={() => setScreen("CTA")}
-                  style={{ padding: '1rem 2rem', fontSize: '1.2rem' }}
                 >
                   What's Next?
                   <span className="arrow">&rarr;</span>
@@ -278,12 +256,12 @@ export default function Home() {
             Restart
           </button>
 
-          <a href="https://instagram.com/tedxbitshyderabad" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ padding: '1rem 2rem', fontSize: '1.2rem', textDecoration: 'none' }}>
+          <a href="https://instagram.com/tedxbitshyderabad" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ textDecoration: 'none' }}>
             Our Instagram
             <span className="arrow">&rarr;</span>
           </a>
 
-          <a href="https://tedxbitshyderabad.org" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ padding: '1rem 2rem', fontSize: '1.2rem', textDecoration: 'none' }}>
+          <a href="https://tedxbitshyderabad.org" target="_blank" rel="noopener noreferrer" className="brutalist-btn" style={{ textDecoration: 'none' }}>
             Visit our Site
             <span className="arrow">&rarr;</span>
           </a>

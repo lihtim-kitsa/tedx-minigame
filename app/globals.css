@@ -411,3 +411,23 @@ body {
     margin-bottom: 1.5rem;
   }
 }
+
+.quiz-option-btn {
+  background-color: var(--bg-main);
+  border: none;
+  padding: 3rem 2rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  font-family: var(--font-inter);
+}
+
+.quiz-option-btn:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-main);
+}

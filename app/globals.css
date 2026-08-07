@@ -259,6 +259,13 @@ body {
   color: var(--text-primary);
 }
 
+.quiz-question {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  max-width: 900px;
+}
+
 /* Responsive Utilities */
 
 .screen-container {
@@ -396,5 +403,11 @@ body {
   
   .cta-buttons button {
     margin-bottom: 1rem;
+  }
+  
+  .quiz-question {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
   }
 }

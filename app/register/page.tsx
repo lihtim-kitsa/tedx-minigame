@@ -126,7 +126,7 @@ export default function RegisterPage() {
           ( {currentQuestionIndex + 1} / {QUESTIONS.length} )
         </div>
         
-        <h2 className="font-display" style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: '1.1', maxWidth: '900px' }}>
+        <h2 className="font-display quiz-question">
           {question}
         </h2>
         

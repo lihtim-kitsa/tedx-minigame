@@ -135,7 +135,7 @@ export default function Home() {
           ( {currentQuestionIndex + 1} / {questions.length} )
         </div>
 
-        <h2 className="font-display" style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: '1.1', maxWidth: '900px' }}>
+        <h2 className="font-display quiz-question">
           {question.text}
         </h2>
 

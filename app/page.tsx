@@ -85,7 +85,7 @@ export default function Home() {
   };
 
   const renderLanding = () => (
-    <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+    <div className="screen-container fade-in">
       <div className="section-number">/01</div>
       <div style={{ position: 'relative', width: '100%', marginTop: '3rem' }}>
         <h1 className="massive-text">
@@ -115,7 +115,7 @@ export default function Home() {
   const renderQuiz = () => {
     const question = questions[currentQuestionIndex];
     return (
-      <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', padding: '4rem' }}>
+      <div className="screen-container fade-in">
         <div className="section-number">/Q</div>
         
         <div style={{ display: 'flex', gap: '8px', marginBottom: '3rem', width: '100%' }}>
@@ -139,14 +139,7 @@ export default function Home() {
           {question.text}
         </h2>
         
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(2, 1fr)', 
-          gap: '1px',
-          backgroundColor: 'var(--border-color)',
-          border: '1px solid var(--border-color)',
-          width: '100%'
-        }}>
+        <div className="quiz-grid">
           {question.options.map((option, idx) => (
             <button 
               key={idx}
@@ -188,7 +181,7 @@ export default function Home() {
     const archetype = archetypes[topSpeaker.archetype_id];
 
     return (
-      <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+      <div className="screen-container fade-in">
         <div className="section-number">/02</div>
         <div className="spotlight-sweep"></div>
         
@@ -196,7 +189,7 @@ export default function Home() {
           {topSpeaker.name}
         </h1>
 
-        <div className="brutalist-border" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', width: '100%', marginTop: '0' }}>
+        <div className="brutalist-border result-grid">
           {/* Strict Rectangular Photo */}
           <div style={{ position: 'relative' }}>
             <div style={{ 
@@ -254,7 +247,7 @@ export default function Home() {
   };
 
   const renderCTA = () => (
-    <div className="container fade-in" style={{ justifyContent: 'center', alignItems: 'flex-start', maxWidth: '1200px', width: '100%', padding: '4rem' }}>
+    <div className="screen-container fade-in">
       <div className="section-number">/03</div>
       
       <h1 className="massive-text" style={{ marginBottom: '2rem' }}>
@@ -263,12 +256,12 @@ export default function Home() {
         <span style={{ color: 'var(--tedx-red)' }}>SPREADING</span>
       </h1>
       
-      <div className="brutalist-border" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', width: '100%' }}>
+      <div className="brutalist-border cta-layout">
         <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6' }}>
           Join us at the upcoming event to see these ideas live. We are also recruiting passionate individuals to help build the next edition.
         </p>
         
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+        <div className="cta-buttons">
           <button 
             onClick={resetGame} 
             style={{ 

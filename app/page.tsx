@@ -8,7 +8,7 @@ type ScreenState = "LANDING" | "QUIZ" | "EMAIL" | "RESULT" | "CTA";
 export default function Home() {
   const [screen, setScreen] = useState<ScreenState>("LANDING");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [scores, setScores] = useState<Record<string, number>>({});
+  const [userArchetypes, setUserArchetypes] = useState<Record<number, string[]>>({});
   const [topSpeaker, setTopSpeaker] = useState<typeof speakers[0] | null>(null);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,7 +20,7 @@ export default function Home() {
   const resetGame = useCallback(() => {
     setScreen("LANDING");
     setCurrentQuestionIndex(0);
-    setScores({});
+    setUserArchetypes({});
     setTopSpeaker(null);
     setUserAnswers({});
   }, []);
@@ -48,28 +48,32 @@ export default function Home() {
   }, [resetTimer]);
 
   const handleStart = () => {
-    setScores({});
+    setUserArchetypes({});
     setUserAnswers({});
     setCurrentQuestionIndex(0);
     setScreen("QUIZ");
   };
 
   const handleAnswer = (archetypeIds: string[], text: string) => {
-    const newScores = { ...scores };
-    archetypeIds.forEach(id => {
-      newScores[id] = (newScores[id] || 0) + 1;
-    });
-    setScores(newScores);
+    const newArchetypes = { ...userArchetypes, [currentQuestionIndex]: archetypeIds };
+    setUserArchetypes(newArchetypes);
     setUserAnswers(prev => ({ ...prev, [currentQuestionIndex]: text }));
 
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(curr => curr + 1);
     } else {
-      calculateResult(newScores);
+      calculateResult(newArchetypes);
     }
   };
 
-  const calculateResult = (finalScores: Record<string, number>) => {
+  const calculateResult = (finalArchetypes: Record<number, string[]>) => {
+    const finalScores: Record<string, number> = {};
+    Object.values(finalArchetypes).forEach(ids => {
+      ids.forEach(id => {
+        finalScores[id] = (finalScores[id] || 0) + 1;
+      });
+    });
+
     let maxScore = -1;
     let topArchetypeIds: string[] = [];
 
@@ -212,8 +216,27 @@ export default function Home() {
           ))}
         </div>
 
-        <div style={{ color: 'var(--tedx-red)', marginBottom: '1rem', fontSize: '1rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-          ( {currentQuestionIndex + 1} / {questions.length} )
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', width: '100%' }}>
+          <div style={{ color: 'var(--tedx-red)', fontSize: '1rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            ( {currentQuestionIndex + 1} / {questions.length} )
+          </div>
+          {currentQuestionIndex > 0 && (
+            <button 
+              onClick={() => setCurrentQuestionIndex(curr => curr - 1)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-muted)',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+                fontFamily: 'var(--font-inter)',
+                fontSize: '0.9rem',
+                textTransform: 'uppercase'
+              }}
+            >
+              &larr; Back
+            </button>
+          )}
         </div>
 
         <h2 className="font-display quiz-question">

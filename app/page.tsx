@@ -310,8 +310,11 @@ export default function Home() {
                 2
               </div>
               <div>
-                <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+                <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1rem' }}>
                   {topSpeaker.result_blurb}
+                </p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '2rem' }}>
+                  <strong>About {topSpeaker.name}:</strong> {topSpeaker.description}
                 </p>
                 <button
                   className="brutalist-btn"

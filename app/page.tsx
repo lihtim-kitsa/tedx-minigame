@@ -3,13 +3,16 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { questions, archetypes, speakers } from "@/data/gameData";
 
-type ScreenState = "LANDING" | "QUIZ" | "RESULT" | "CTA";
+type ScreenState = "LANDING" | "QUIZ" | "EMAIL" | "RESULT" | "CTA";
 
 export default function Home() {
   const [screen, setScreen] = useState<ScreenState>("LANDING");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [topSpeaker, setTopSpeaker] = useState<typeof speakers[0] | null>(null);
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
 
   // Idle Timer Logic
   const resetTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -19,6 +22,7 @@ export default function Home() {
     setCurrentQuestionIndex(0);
     setScores({});
     setTopSpeaker(null);
+    setUserAnswers({});
   }, []);
 
   const resetTimer = useCallback(() => {
@@ -45,16 +49,18 @@ export default function Home() {
 
   const handleStart = () => {
     setScores({});
+    setUserAnswers({});
     setCurrentQuestionIndex(0);
     setScreen("QUIZ");
   };
 
-  const handleAnswer = (archetypeIds: string[]) => {
+  const handleAnswer = (archetypeIds: string[], text: string) => {
     const newScores = { ...scores };
     archetypeIds.forEach(id => {
       newScores[id] = (newScores[id] || 0) + 1;
     });
     setScores(newScores);
+    setUserAnswers(prev => ({ ...prev, [currentQuestionIndex]: text }));
 
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(curr => curr + 1);
@@ -81,8 +87,83 @@ export default function Home() {
     const winner = matchedSpeakers.length > 0 ? matchedSpeakers[0] : speakers[0];
 
     setTopSpeaker(winner);
-    setScreen("RESULT");
+    setScreen("EMAIL");
   };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.endsWith('@hyderabad.bits-pilani.ac.in')) {
+      setIsSubmitting(true);
+      try {
+        const payload = {
+          email: email,
+          answers: userAnswers
+        };
+        
+        await fetch(process.env.NEXT_PUBLIC_SHEET_ENDPOINT as string, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify(payload),
+          mode: "no-cors",
+        });
+        
+        setScreen("RESULT");
+      } catch (error) {
+        console.error("Failed to submit", error);
+        setScreen("RESULT");
+      } finally {
+        setIsSubmitting(false);
+      }
+    } else {
+      alert("Please enter a valid @hyderabad.bits-pilani.ac.in email address.");
+    }
+  };
+
+  const renderEmail = () => (
+    <div className="screen-container fade-in">
+      <div className="section-number">/MAIL</div>
+      <div style={{ position: 'relative', width: '100%', marginTop: '3rem' }}>
+        <h1 className="massive-text" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', marginBottom: '1rem' }}>
+          ALMOST<br />
+          <span style={{ color: 'var(--tedx-red)' }}>THERE</span>
+        </h1>
+
+        <div className="brutalist-border email-layout">
+          <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '400px', lineHeight: '1.6', marginBottom: '2rem' }}>
+            Enter your email to unlock your TEDx speaker archetype and get updates.
+          </p>
+
+          <form 
+            onSubmit={handleEmailSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px', width: '100%' }}
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your @hyderabad.bits-pilani.ac.in email"
+              required
+              style={{
+                padding: '1rem',
+                fontSize: '1rem',
+                background: 'transparent',
+                border: '1px solid var(--border-color)',
+                color: 'var(--text-primary)',
+                fontFamily: 'inherit',
+                width: '100%'
+              }}
+            />
+            <button type="submit" className="brutalist-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "See Result"}
+              {!isSubmitting && <span className="arrow">&rarr;</span>}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 
   const renderLanding = () => (
     <div className="screen-container fade-in">
@@ -143,7 +224,7 @@ export default function Home() {
           {question.options.map((option, idx) => (
             <button
               key={idx}
-              onClick={() => handleAnswer(option.archetype_ids)}
+              onClick={() => handleAnswer(option.archetype_ids, option.text)}
               className="quiz-option-btn"
               style={{ textAlign: 'left' }}
             >
@@ -274,6 +355,7 @@ export default function Home() {
     <>
       {screen === "LANDING" && renderLanding()}
       {screen === "QUIZ" && renderQuiz()}
+      {screen === "EMAIL" && renderEmail()}
       {screen === "RESULT" && renderResult()}
       {screen === "CTA" && renderCTA()}
     </>
